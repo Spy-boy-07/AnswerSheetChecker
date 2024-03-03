@@ -4,20 +4,15 @@ import re
 from sentence_transformers import SentenceTransformer, util
 from openai import OpenAI
 
-# Title of the app
 st.title("PaperCheck")
 
-# Create a layout with three columns
 col1, col2, col3 = st.columns([2, 1, 1])
 
-# Place the PDF upload fields in the middle column
 with col1:
-    # First PDF upload field
     uploaded_file1 = col1.file_uploader("Upload AnswerKey", type=["pdf"])
     if uploaded_file1 is not None:
         st.write(f"First PDF file uploaded: {uploaded_file1.name}")
 
-    # Second PDF upload field
     uploaded_file2 = col1.file_uploader("Upload Answer Sheet of Student", type=["pdf"])
     if uploaded_file2 is not None:
         st.write(f"Second PDF file uploaded: {uploaded_file2.name}")
@@ -25,7 +20,6 @@ with col1:
 if st.button("Process PDFs"):
 
     st.markdown("<hr>", unsafe_allow_html=True)
-    # st.write("Answer Key:")
     with pdfplumber.open(uploaded_file1) as keypdf:
         textkey = ""
 
@@ -43,8 +37,6 @@ if st.button("Process PDFs"):
             page_text = page.extract_text()
             text += page_text
 
-
-    #
     lines = textkey.split("\n")
     questions = []
     answers = []
@@ -235,9 +227,7 @@ if st.button("Process PDFs"):
 
     final_score = convert_array_to_specific_range(final_avg_score)
 
-
     report = ""
-
 
     for i, (score, max_mark, que, std_ans) in enumerate(
         zip(final_score, max_marks, que_final, std_ans_final), start=1
@@ -245,9 +235,13 @@ if st.button("Process PDFs"):
         report += f"Score:<bold> {score}/{max_mark} </bold> <br>"
         report += f" {que}<br>"
         report += f"Answer {std_ans}<br><br>"
-
+    
+    total_marks = sum(max_marks)
+    marks_obtained = sum(final_score)
+    percentage = (marks_obtained / total_marks) * 100
+    percentage_str = f"{percentage:.2f}%"
     with st.container():
         st.markdown(
-            f'<div style="background-color:#000000;padding:16px;border-radius:10px;"><h4>Total Marks: <h1>{sum(final_score)} / {sum(max_marks)}</h1></h4><p>{report}</p></div>',
+            f'<div style="background-color:#000000;padding:16px;border-radius:10px;"><h4>Total Marks: <h1>{marks_obtained} / {total_marks}</h1><h4> Percentage: <h1>{percentage_str}</h1> </h4><p>{report}</p></div>',
             unsafe_allow_html=True,
         )
