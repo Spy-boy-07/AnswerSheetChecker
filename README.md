@@ -16,12 +16,14 @@ AI PaperChecker is a Streamlit-based web application designed to automate the gr
 To run AI PaperChecker locally, follow these steps:
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/ai-paperchecker.git
-   cd ai-paperchecker
+   git clone https://github.com/Spy-boy-07/AnswerSheetChecker.git
+   cd AnswerSheetChecker
    
 2. **Install Dependencies:**:
    ```bash
-    pip install -r requirements.txt
+    pip install openAI pdfplumber SentenceTransformer re streamlit
+
+Replace API_KEY with your OpenAi's API key. 
 
 3. **Run the Application:**:
    ```bash
