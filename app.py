@@ -136,7 +136,7 @@ if st.button("Process PDFs"):
         for i, student_answer in enumerate(std_ans_final, start=1):
             file.write(f"Answer {student_answer}\n")
 
-    api_key = "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"
+    api_key = "<paste your API_KEY here>"
     client = OpenAI(api_key=api_key)
 
     usecase_Topic = """ You are an assistant that is checking and grading the answer sheet of students by comparing it with the answers provided by the teacher which is the answer key. You can also give marks, according to your knowledge but only when you are sure about it! \n You give to the point accurate marks to the students from 0.00 to 1.00 in the format of 'Score' that is a floating point number.
